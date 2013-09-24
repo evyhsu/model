@@ -196,4 +196,23 @@ WimaxConnection::ClearFragmentsQueue (void)
 {
   m_fragmentsQueue.clear ();
 }
+//yen
+
+/**
+ * Return the number of neighbor in the list
+ * @return the number of neighbor in the list
+ */
+uint8_t 
+WimaxConnection::GetNbNeighbor (void) const
+{
+	return m_nbentry;
+}
+
+
+
+
+
+
+
+
 } // namespace ns3

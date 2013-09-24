@@ -95,6 +95,9 @@ public:
 
   // Definition of Fragments Queue data type
   typedef std::list<Ptr<const Packet> > FragmentsQueue;
+//yen 
+  //Definition of GetNbNeighbor data type
+  typedef std::list<Ptr<const Packet> > GetNbNeighbor;
   /**
    * \brief get a queue of received fragments
    */
@@ -108,6 +111,8 @@ public:
    * \brief delete all enqueued fragments
    */
   void ClearFragmentsQueue (void);
+//yen
+  uint8_t GetNbNeighbor (void) const;
 
 private:
   virtual void DoDispose (void);
@@ -119,6 +124,8 @@ private:
 
   // FragmentsQueue stores all received fragments
   FragmentsQueue m_fragmentsQueue;
+//yen  
+  GetNbNeighbor m_nbentry;
 };
 
 } // namespace ns3
