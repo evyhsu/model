@@ -66,7 +66,11 @@ WimaxConnection::WimaxConnection (Cid cid, enum Cid::Type type)
   : m_cid (cid),
     m_cidType (type),
     m_queue (CreateObject<WimaxMacQueue> (1024)),
-    m_serviceFlow (0)
+    m_serviceFlow (0),
+//yen
+    m_nbentry (0),
+    m_nbs (1)
+    
 {
 }
 
@@ -208,9 +212,24 @@ WimaxConnection::GetNbNeighbor (void) const
 	return m_nbentry;
 }
 
+uint8_t 
+WimaxConnection::GetNeighbors (void) const
+{
+	return m_nbs;
+}
 
+void 
+WimaxConnection::SetDetected (bool detected)
+{
+  bool m_detected = false;
+  m_detected = detected;
+}
 
-
+bool 
+WimaxConnection::isDetected (void) const
+{
+    return m_detected;
+}
 
 
 

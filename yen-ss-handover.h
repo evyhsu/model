@@ -31,9 +31,9 @@ public:
 
   //void send_msho_req (void);
   void InitYenSSHandover(void);
-  void send_msho_req (Ptr<Packet> packet);
+  void send_msho_req (Ptr<Packet> packet, const MacHeaderType &hdrType);
 
-  uint8_t getMOB_MSHO_REQ_size(void);
+  uint8_t getMOB_MSHO_REQ_size(MshoReq *mshoreq);
   uint8_t getNbNeighbor (void) const;
   
   bool isDetected(void) const;//for inheritance from wimaxnetdevice
@@ -42,8 +42,8 @@ public:
   bool Enqueue (Ptr<Packet> packet, const MacHeaderType &hdrType, Ptr<WimaxConnection> connection);
 
 
-};
 private:
+    void DoDispose (void);
     bool DoSend (Ptr<Packet> packet, const Mac48Address &source, const Mac48Address &dest, uint16_t protocolNumber);
     void DoReceive (Ptr<Packet> packet);
 	
@@ -54,12 +54,13 @@ private:
 
 	//parameter from send_msho_req ()
 	double rssi;
-	uint8_t m_nbentry;
 	uint8_t m_nbPref;
     uint8_t m_detected_;
 	// set pointer for send_msho_req (void)
 	
-	//ptr<WimaxNeighborEntry> m_entry;
+	Ptr<WimaxConnection> m_nbrdb;
+	Ptr<WimaxConnection> m_entry;
+
 };//class YenSSHandover
 
 } // namespace ns3

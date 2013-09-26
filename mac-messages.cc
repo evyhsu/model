@@ -147,7 +147,7 @@ RngReq::GetReqDlBurstProfile (void) const
 Mac48Address
 RngReq::GetMacAddress (void) const
 {
-  return m_macAddmamress;
+  return m_macAddress;
 }
 
 uint8_t
@@ -856,13 +856,12 @@ DsaAck::Deserialize (Buffer::Iterator start)
   return i.GetDistanceFrom (start);
 }
 // ----------------------------------------------------------------------------------------------------------
-
+//yen
 NS_OBJECT_ENSURE_REGISTERED (MshoReq);
 
 MshoReq::MshoReq (void)
   : m_reportMetric (0),
-    m_nNewBsIndex (0),
-    
+    m_nNewBsIndex (0)
 {
 }
 
@@ -881,18 +880,21 @@ MshoReq::GetReportMetric (void) const
 {
   return m_reportMetric;
 }
+
 void 
 MshoReq::SetNNewBsIndex (uint8_t nNewBsIndex)
 {
-  m_nNewBsIndex = nNewBsIndex
+  m_nNewBsIndex = nNewBsIndex;
 }
+
 uint8_t 
 MshoReq::GetNNewBsIndex (void) const
 {
   return m_nNewBsIndex;
 }
+
 std::string 
-GetName (void) const
+MshoReq::GetName (void) const
 {
   return "MSHO_REQ";
 }
@@ -941,11 +943,11 @@ MshoReq::Deserialize (Buffer::Iterator start)
 }
 
 // ----------------------------------------------------------------------------------------------------------
-
+//yen
 NS_OBJECT_ENSURE_REGISTERED (MshoReqBsIndex);
 
 MshoReqBsIndex::MshoReqBsIndex (void)
-  : m_neighborbsIndex (0),
+  : m_neighborBsIndex (0),
     m_preambleIndex (0),
     m_bsCinrMean (0),
     m_bsRssiMean (0),
@@ -1057,7 +1059,7 @@ MshoReqBsIndex::GetArrivalTimeDiff (void) const
 }
 
 std::string 
-GetName (void) const
+MshoReqBsIndex::GetName (void) const
 {
   return "MSHO_REQ_BS_INDEX";
 }

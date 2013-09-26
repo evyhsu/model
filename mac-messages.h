@@ -504,7 +504,7 @@ private:
 
 #endif /* RNG_REQ_H */
 // ----------------------------------------------------------------------------------------------------------
-
+//yen
 #ifndef MSHO_REQ_H
 #define MSHO_REQ_H
 
@@ -542,7 +542,6 @@ private:
   //MshoReqBsIndex bs_index[MAX_NBR];//************NOT SURE HOW TO WRITE************//
   //end 
 
-
 };//class
 
 }//namespace ns3
@@ -550,7 +549,7 @@ private:
 #endif /* MSHO_REQ_H */
 
 // ----------------------------------------------------------------------------------------------------------
-
+//yen
 #ifndef MSHO_REQ_BS_INDEX_H
 #define MSHO_REQ_BS_INDEX_H
 
@@ -572,14 +571,14 @@ public:
   void SetServiceLevelPrediction (uint8_t serviceLevelPrediction);
   void SetArrivalTimeDiffInd (uint8_t arrivalTimeDiffInd);
   void SetArrivalTimeDiff (uint8_t arrivalTimeDiff);
-  uint8_t GetNeighborBsInde (void) const;
+  uint8_t GetNeighborBsIndex (void) const;
   uint8_t GetPreambleIndex (void) const;
   uint8_t GetBsCinrMean (void) const;
   uint8_t GetBsRssiMean (void) const;
   uint8_t GeRrelativeDelay (void) const;
   uint8_t GetServiceLevelPrediction (void) const;
   uint8_t GetArrivalTimeDiffInd (void) const;
-  uint8_t GeArrivalTimeDiff (void) const;
+  uint8_t GetArrivalTimeDiff (void) const;
 
   std::string GetName (void) const;
   static TypeId GetTypeId (void);
@@ -590,7 +589,7 @@ public:
   uint32_t Deserialize (Buffer::Iterator start);
 
 private:
-  uint8_t m_neighborbsIndex;
+  uint8_t m_neighborBsIndex;
   uint8_t m_preambleIndex;
   uint8_t m_bsCinrMean; //if report_metric[0]==1
   uint8_t m_bsRssiMean; //if report_metric[1]==1
@@ -600,9 +599,6 @@ private:
   uint8_t m_arrivalTimeDiffInd: 1;
 	//next if arrival_time_diff_ind==1
   uint8_t m_arrivalTimeDiff: 4;
-
-
-
 
 };//class
 
