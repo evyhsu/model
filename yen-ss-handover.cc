@@ -137,8 +137,8 @@ YenSSHandover::send_msho_req (Ptr<Packet> packet,
 
 //create packet for request
 
-   packet->sizeof (MshoReq); //replace ns2 p = getPacket ();
-
+   packet->sizeof(MshoReq) + m_nbPref * sizeof(MshoReqBsIndex); //replace ns2 p = getPacket ();
+   mshoreq
 
 
 
