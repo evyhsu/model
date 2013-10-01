@@ -4,7 +4,14 @@ here is the email you can contect: yenchsu@gmail.com
 */
 
 #include "yen-ss-handover.h"
-
+#include "ss-link-manager.h"
+#include <stdint.h>
+#include "ns3/node.h"
+#include "ns3/packet.h"
+#include "ns3/simulator.h"
+#include "ns3/log.h"
+#include "ns3/pointer.h"
+#include "ns3/enum.h"
 NS_LOG_COMPONENT_DEFINE ("YenSSHandover");
 
 namespace ns3 {
@@ -17,12 +24,14 @@ TypeId YenSSHandover::GetTypeId (void)
   return tid;
 }
 
-YenSSHandover::YenSSHandover (void)
+YenSSHandover::YenSSHandover (Ptr<SubscriberStationNetDevice> ss)
+  :m_ss (ss)
 {
 }
 
 YenSSHandover::~YenSSHandover (void)
 {
+  m_ss = 0;
 }
 
 /*uint8_t 
@@ -41,6 +50,8 @@ YenSSHandover::DoDispose (void)
 {
   m_nbrdb = 0;
   m_entry = 0;
+  m_ss = 0;
+  m_rssi = 0;
 }
 
 void
@@ -83,11 +94,11 @@ YenSSHandover::Enqueue (Ptr<Packet> packet,
 void
 YenSSHandover::InitYenSSHandover (void)
 {
-	//m_nNewBsIndex = 0;
-	//m_reportMetric = 0*2;
 	m_size = 0;
 	m_tmp = 0;
 	m_tmpB = 0;
+    m_rssi = CreateObject<SSLinkManager> (this);   
+    //m_ss = CreateObject<SubscriberStationNetDevice> (this);
 }
 
 uint8_t
@@ -116,11 +127,19 @@ YenSSHandover::getMOB_MSHO_REQ_size (MshoReq *mshoreq)
   	return m_size;
 }
 
+void
+YenSSHandover::SetParametersToAdjust (MshoReq *mshoreq)
+{
+  mshoreq->SetReportMetric (0x2);
+  mshoreq->SetNNewBsIndex (0);
+}
+
 void 
 YenSSHandover::send_msho_req (Ptr<Packet> packet,
 							  const MacHeaderType &hdrType,
 							  )
 {
+    Ptr<SubscriberStationNetDevice> ss = m_SS->GetObject<SubscriberStationNetDevice> ();
     MshoReq mshoreq;//define at mac-messages.cc, replace Mac80216MobMshoReqFrame *m_req_frame;
 	
 	m_nbPref = 0;
@@ -136,12 +155,39 @@ YenSSHandover::send_msho_req (Ptr<Packet> packet,
 		  return; //no other BS found
 
 //create packet for request
+   Ptr<Packet> packet = Create<Packet> ();
+   packet->AddHeader (mshoreq);
+   packet->AddHeader (ManagementMessageType (
+                       ManagementMessageType::MESSAGE_TYPE_MOB_MSHO_REQ));
+   m_ss->Enqueue (packet, MacHeaderType (), m_ss->GetConnection (cid));
 
    packet->sizeof(MshoReq) + m_nbPref * sizeof(MshoReqBsIndex); //replace ns2 p = getPacket ();
-   mshoreq
+   rssi = m_rssi->CalculateMaxIRSignalStrength ()
 
+}
 
+Ptr<SSLinkManager>
+YenSSHandover::GetRSSI (void) const;
+{
+  return m_rssi;
+}
 
+void 
+YenSSHandover::SetRSSI (Ptr<SSLinkManager> rssi);
+{
+  m_rssi= rssi
+}
 
+/*Ptr<SubscriberStationNetDevice>
+YenSSHandover::GetSS (void) const;
+{
+  return m_ss;
+}
+
+void 
+YenSSHandover::SetSS (Ptr<SubscriberStationNetDevice> ss);
+{
+  m_ss= ss
+}*/
 
 }// namespace ns3
