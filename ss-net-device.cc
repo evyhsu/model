@@ -256,7 +256,7 @@ SubscriberStationNetDevice::InitSubscriberStationNetDevice (void)
   m_scheduler = CreateObject<SSScheduler> (this);
   m_serviceFlowManager = CreateObject<SsServiceFlowManager> (this);
 //yen
-  m_yensshandover = CreateObject<YenSSHandover> ();
+  m_yensshandover = CreateObject<YenSSHandover> (this);
 }
 
 SubscriberStationNetDevice::SubscriberStationNetDevice (Ptr<Node> node, Ptr<WimaxPhy> phy)
@@ -618,8 +618,9 @@ SubscriberStationNetDevice::DoSend (Ptr<Packet> packet,
 
   ServiceFlow *serviceFlow = 0;
 //yen
-  m_yensshandover->getMOB_MSHO_REQ_size ();
-
+  //Cid *cid;
+  m_yensshandover->GetMOB_MSHO_REQ_size ();
+  m_yensshandover->send_msho_req(/*Cid cid*/);
 
   if (IsRegistered ())
     {

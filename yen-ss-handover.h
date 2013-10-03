@@ -16,35 +16,28 @@ here is the email you can contect: yenchsu@gmail.com
 #include "mac-messages.h"
 
 class SSLinkManager;
-class SubscriberStationNetDevice;
+//class SubscriberStationNetDevice;
 
 namespace ns3 {
 
-//class Packet
-/*class HdrCmn
-class HdrMac80216
-class Mac80216MobMshoReqFrame
-class NeighborDB
-class WimaxNeighborEntry*/
-
-class YenSSHandover : public WimaxNetDevice
+class YenSSHandover : public Object
 {
 public:
   static TypeId GetTypeId (void);//each class must implement a static public member function called GetTypeId (void)
-  YenSSHandover (Ptr<SubscriberStationNetDevice> ss);
+  YenSSHandover (Ptr<WimaxNetDevice> device);
   ~YenSSHandover (void);
+  void DoDispose (void);
 
-  //void send_msho_req (void);
   void InitYenSSHandover(void);
-  void send_msho_req (Ptr<Packet> packet, const MacHeaderType &hdrType);
+  void send_msho_req (/*Cid cid*/);
 
-  uint8_t getMOB_MSHO_REQ_size(MshoReq *mshoreq);
-  uint8_t getNbNeighbor (void) const;
+  uint8_t GetMOB_MSHO_REQ_size();
+  //uint8_t GetNbNeighbor (void) const;
   
-  bool isDetected(void) const;//for inheritance from wimaxnetdevice
-  void Start (void);
-  void Stop (void);
-  bool Enqueue (Ptr<Packet> packet, const MacHeaderType &hdrType, Ptr<WimaxConnection> connection);
+  //bool isDetected(void) const;//for inheritance from wimaxnetdevice
+  //void Start (void);
+  //void Stop (void);
+  //bool Enqueue (Ptr<Packet> packet, const MacHeaderType &hdrType, Ptr<WimaxConnection> connection);
   
   Ptr<SSLinkManager> m_rssi;
   Ptr<SSLinkManager> GetRSSI (void) const;
@@ -54,9 +47,10 @@ public:
   Ptr<SubscriberStationNetDevice> GetSS;
   void SetSS (Ptr<SubscriberStationNetDevice> );*/
 private:
-    void DoDispose (void);
-    bool DoSend (Ptr<Packet> packet, const Mac48Address &source, const Mac48Address &dest, uint16_t protocolNumber);
-    void DoReceive (Ptr<Packet> packet);
+    YenSSHandover (const YenSSHandover&);
+    YenSSHandover & operator= (const YenSSHandover &);
+    //bool DoSend (Ptr<Packet> packet, const Mac48Address &source, const Mac48Address &dest, uint16_t protocolNumber);
+    //void DoReceive (Ptr<Packet> packet);
 	
     void SetParametersToAdjust (MshoReq *mshoreq);
 
@@ -73,8 +67,8 @@ private:
 	
 	Ptr<WimaxConnection> m_nbrdb;
 	Ptr<WimaxConnection> m_entry;
-    Ptr<SubscriberStationNetDevice> m_ss;
-    
+    //Ptr<SubscriberStationNetDevice> m_ss;
+    Ptr<WimaxNetDevice> m_device;
 
 };//class YenSSHandover
 

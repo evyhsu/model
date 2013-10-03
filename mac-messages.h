@@ -575,7 +575,7 @@ public:
   uint8_t GetPreambleIndex (void) const;
   uint8_t GetBsCinrMean (void) const;
   uint8_t GetBsRssiMean (void) const;
-  uint8_t GeRrelativeDelay (void) const;
+  uint8_t GetRelativeDelay (void) const;
   uint8_t GetServiceLevelPrediction (void) const;
   uint8_t GetArrivalTimeDiffInd (void) const;
   uint8_t GetArrivalTimeDiff (void) const;

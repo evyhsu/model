@@ -65,6 +65,8 @@ public:
   void ScheduleScanningRestart (Time interval,
                                 SubscriberStationNetDevice::EventType eventType,
                                 bool deleteUlParameters, EventId &eventId);
+//yen
+  uint16_t CalculateMaxIRSignalStrength (void);
 private:
   SSLinkManager (const SSLinkManager &);
   SSLinkManager & operator= (const SSLinkManager &);
@@ -78,7 +80,7 @@ private:
   void DeleteUplinkParameters (void);
   void AdjustRangingParameters (const RngRsp &rngrsp);
   void NegotiateBasicCapabilities (void);
-  uint16_t CalculateMaxIRSignalStrength (void);
+  //uint16_t CalculateMaxIRSignalStrength (void);
   uint16_t GetMinTransmitPowerLevel (void);
 
   Ptr<SubscriberStationNetDevice> m_ss;

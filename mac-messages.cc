@@ -1080,7 +1080,7 @@ MshoReqBsIndex::GetInstanceTypeId (void) const
 void
 MshoReqBsIndex::Print (std::ostream &os) const
 {
-  os << " neighbor bs index = " << (uint8_t) m_neighborbsIndex << ", preamble Index = " << (uint8_t) m_preambleIndex << ", bs Cinr Mean" << (uint8_t) m_bsCinrMean << ", bs Rssi Mean" << (uint8_t) m_bsRssiMean << ", relative Delay" << (uint8_t) m_relativeDelay << ", service Level Prediction" << (uint8_t) m_serviceLevelPrediction << ", arrival Time Diff Ind" << (uint8_t) m_arrivalTimeDiffInd << ", arrival Time Diff" << (uint8_t) m_arrivalTimeDiff;
+  os << " neighbor bs index = " << (uint8_t) m_neighborBsIndex << ", preamble Index = " << (uint8_t) m_preambleIndex << ", bs Cinr Mean" << (uint8_t) m_bsCinrMean << ", bs Rssi Mean" << (uint8_t) m_bsRssiMean << ", relative Delay" << (uint8_t) m_relativeDelay << ", service Level Prediction" << (uint8_t) m_serviceLevelPrediction << ", arrival Time Diff Ind" << (uint8_t) m_arrivalTimeDiffInd << ", arrival Time Diff" << (uint8_t) m_arrivalTimeDiff;
 }
 
 uint32_t
@@ -1093,7 +1093,7 @@ void
 MshoReqBsIndex::Serialize (Buffer::Iterator start) const
 {
   Buffer::Iterator i = start;
-  i.WriteU8 (m_neighborbsIndex);
+  i.WriteU8 (m_neighborBsIndex);
   i.WriteU8 (m_preambleIndex);
   i.WriteU8 (m_bsCinrMean);
   i.WriteU8 (m_bsRssiMean);
@@ -1107,7 +1107,7 @@ uint32_t
 MshoReqBsIndex::Deserialize (Buffer::Iterator start)
 {
   Buffer::Iterator i = start;
-  m_neighborbsIndex = i.ReadU8 ();
+  m_neighborBsIndex = i.ReadU8 ();
   m_preambleIndex = i.ReadU8 ();
   m_bsCinrMean = i.ReadU8 ();
   m_bsRssiMean = i.ReadU8 ();
