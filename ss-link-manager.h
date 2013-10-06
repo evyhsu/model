@@ -66,7 +66,13 @@ public:
                                 SubscriberStationNetDevice::EventType eventType,
                                 bool deleteUlParameters, EventId &eventId);
 //yen
-  uint16_t CalculateMaxIRSignalStrength (void);
+  uint8_t GetMOB_MSHO_REQ_size();
+  void send_msho_req ();
+  uint8_t GetNeighbors (void) const;
+  uint8_t GetNbNeighbor (void) const;
+  //void SetDetected (bool detected);
+  bool isDetected (void) const;
+
 private:
   SSLinkManager (const SSLinkManager &);
   SSLinkManager & operator= (const SSLinkManager &);
@@ -80,7 +86,7 @@ private:
   void DeleteUplinkParameters (void);
   void AdjustRangingParameters (const RngRsp &rngrsp);
   void NegotiateBasicCapabilities (void);
-  //uint16_t CalculateMaxIRSignalStrength (void);
+  uint16_t CalculateMaxIRSignalStrength (void);
   uint16_t GetMinTransmitPowerLevel (void);
 
   Ptr<SubscriberStationNetDevice> m_ss;
@@ -112,6 +118,16 @@ private:
   uint8_t m_rangingAnomalies;
 
   EventId m_waitForRngRspEvent, m_dlMapSyncTimeoutEvent;
+//yen
+  uint8_t m_size;
+  uint8_t m_tmp;
+  uint8_t m_tmpB;
+  uint8_t m_rssi;
+  uint8_t m_nbPref;
+  uint8_t m_nbentry;
+  uint8_t m_nbs;
+  uint8_t m_entry;
+  bool m_detected;
 };
 
 } // namespace ns3

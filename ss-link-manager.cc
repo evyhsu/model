@@ -63,11 +63,17 @@ SSLinkManager::SSLinkManager (Ptr<SubscriberStationNetDevice> ss)
     m_rangingBO (0),
     m_nrRangingTransOpps (0),
     m_isBackoffSet (false),
-    m_rangingAnomalies (0)
+    m_rangingAnomalies (0),
+//yen
+	m_size (0),
+	m_tmp  (0),
+	m_tmpB (0),
+    m_rssi (0),
+    m_nbPref (0),  
+    m_entry (0)
 {
-
+   m_detected = false;
 }
-
 SSLinkManager::~SSLinkManager (void)
 {
   m_ss = 0;
@@ -78,6 +84,7 @@ void
 SSLinkManager::DoDispose (void)
 {
   m_ss = 0;
+  //m_nbrdb = 0;
 }
 
 void
@@ -501,5 +508,83 @@ SSLinkManager::ScheduleScanningRestart (Time interval,
   m_ss->SetTimer (Simulator::Schedule (interval, &SSLinkManager::StartScanning,
                                        this, eventType, deleteUlParameters), eventId);
 }
+
+//yen
+uint8_t
+SSLinkManager::GetNbNeighbor (void) const
+{
+	return m_nbentry;
+}
+
+uint8_t
+SSLinkManager::GetNeighbors (void) const
+{
+	return m_nbs;
+}
+
+bool 
+SSLinkManager::isDetected (void) const
+{
+    //m_detected = false;
+    return m_detected;
+}
+
+uint8_t
+SSLinkManager::GetMOB_MSHO_REQ_size ()
+{	
+    MshoReq mshoreq;
+    std::cout << "yensshandover" << std::endl;
+	
+	if (mshoreq.GetNNewBsIndex () !=0) 
+    	m_size++;
+
+	if (mshoreq.GetReportMetric () & 0x1) m_tmp++;
+  	if (mshoreq.GetReportMetric () & 0x2) m_tmp++;
+  	if (mshoreq.GetReportMetric () & 0x4) m_tmp++;
+
+	/*for (uint8_t i = 0 ; i < m_n_new_bs_index ; i++) {
+	    m_tmpB += 20 + 8*m_tmp;    
+      if (bs_index[i].arrival_time_diff_ind & 0x1)//000000000000000000000000000000000
+      	m_tmpB += 4;
+  }*/
+
+  	m_size += m_tmp/8;
+  	if ((m_tmp%8)!=0)
+    	m_size ++;  //includes padding
+  
+  	return m_size;
+}
+
+void 
+SSLinkManager::send_msho_req ()
+{
+    
+    //Ptr<SubscriberStationNetDevice> ss = m_device->GetObject<SubscriberStationNetDevice> ();
+    MshoReq mshoreq;//define at mac-messages.cc, replace Mac80216MobMshoReqFrame *m_req_frame;
+
+  	for (uint8_t i = 0 ; i < GetNbNeighbor() ; i++) {
+   	  m_entry = GetNeighbors();
+		if (isDetected()){
+			//NS_LOG_DEBUG ("At: " << NOW << " Mac address : " << addr() << 
+						 // "Found new AP: " << m_entry->getID() << "..need to send HO message\n");
+		  m_nbPref++;
+ 	 }
+ 	}
+		//if (m_nbPref=0) 
+			//return ; //no other BS found*/
+
+//create packet for request
+   Ptr<Packet> p = Create<Packet> ();//
+   p->AddHeader (mshoreq);
+   p->AddHeader (ManagementMessageType (
+                       ManagementMessageType::MESSAGE_TYPE_MOB_MSHO_REQ));
+   m_ss->Enqueue (p, MacHeaderType (), connection);
+
+   //p->sizeof(MshoReq) + m_nbPref*sizeof(MshoReqBsIndex); //replace ns2 p = getPacket ();
+   m_rssi = CalculateMaxIRSignalStrength ();
+
+}
+
+
 
 } // namespace ns3

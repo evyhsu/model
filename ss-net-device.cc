@@ -620,7 +620,7 @@ SubscriberStationNetDevice::DoSend (Ptr<Packet> packet,
 //yen
   //Cid *cid;
   m_yensshandover->GetMOB_MSHO_REQ_size ();
-  m_yensshandover->send_msho_req(/*Cid cid*/);
+  //m_yensshandover->send_msho_req(/*Cid cid*/);
 
   if (IsRegistered ())
     {
