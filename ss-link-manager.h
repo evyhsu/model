@@ -68,10 +68,11 @@ public:
 //yen
   uint8_t GetMOB_MSHO_REQ_size();
   void send_msho_req ();
-  uint8_t GetNeighbors (void) const;
+  uint8_t GetNeighbors (uint8_t) const;
   uint8_t GetNbNeighbor (void) const;
   //void SetDetected (bool detected);
   bool isDetected (void) const;
+  void SetParametersToAdjust (MshoReq *mshoreq);
 
 private:
   SSLinkManager (const SSLinkManager &);

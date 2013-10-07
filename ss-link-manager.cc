@@ -513,12 +513,14 @@ SSLinkManager::ScheduleScanningRestart (Time interval,
 uint8_t
 SSLinkManager::GetNbNeighbor (void) const
 {
-	return m_nbentry;
+	uint8_t m_nbentry = 0;
+    return m_nbentry;
 }
 
 uint8_t
-SSLinkManager::GetNeighbors (void) const
+SSLinkManager::GetNeighbors (uint8_t) const
 {
+    uint8_t m_nbs = 1;
 	return m_nbs;
 }
 
@@ -527,6 +529,13 @@ SSLinkManager::isDetected (void) const
 {
     //m_detected = false;
     return m_detected;
+}
+
+void
+SSLinkManager::SetParametersToAdjust (MshoReq *mshoreq)
+{
+  mshoreq->SetReportMetric (0x2);//Define at mac-message.cc
+  mshoreq->SetNNewBsIndex (0);
 }
 
 uint8_t
@@ -563,7 +572,7 @@ SSLinkManager::send_msho_req ()
     MshoReq mshoreq;//define at mac-messages.cc, replace Mac80216MobMshoReqFrame *m_req_frame;
 
   	for (uint8_t i = 0 ; i < GetNbNeighbor() ; i++) {
-   	  m_entry = GetNeighbors();
+   	  m_entry = GetNeighbors(i);
 		if (isDetected()){
 			//NS_LOG_DEBUG ("At: " << NOW << " Mac address : " << addr() << 
 						 // "Found new AP: " << m_entry->getID() << "..need to send HO message\n");
@@ -574,14 +583,16 @@ SSLinkManager::send_msho_req ()
 			//return ; //no other BS found*/
 
 //create packet for request
-   Ptr<Packet> p = Create<Packet> ();//
+   Ptr<Packet> p = Create<Packet> ();
    p->AddHeader (mshoreq);
    p->AddHeader (ManagementMessageType (
                        ManagementMessageType::MESSAGE_TYPE_MOB_MSHO_REQ));
+   Ptr<WimaxConnection> connection;
    m_ss->Enqueue (p, MacHeaderType (), connection);
 
    //p->sizeof(MshoReq) + m_nbPref*sizeof(MshoReqBsIndex); //replace ns2 p = getPacket ();
    m_rssi = CalculateMaxIRSignalStrength ();
+   p->Getsize() = 
 
 }
 

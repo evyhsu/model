@@ -857,6 +857,7 @@ DsaAck::Deserialize (Buffer::Iterator start)
 }
 // ----------------------------------------------------------------------------------------------------------
 //yen
+//rewrite ns2 mac802_16pkt.h "struct mac802_16_mob_msho_req_frame"
 NS_OBJECT_ENSURE_REGISTERED (MshoReq);
 
 MshoReq::MshoReq (void)
@@ -944,6 +945,7 @@ MshoReq::Deserialize (Buffer::Iterator start)
 
 // ----------------------------------------------------------------------------------------------------------
 //yen
+//rewrite ns2 mac802_16pkt.h "struct mac802_16_mob_msho_req_bs_index"
 NS_OBJECT_ENSURE_REGISTERED (MshoReqBsIndex);
 
 MshoReqBsIndex::MshoReqBsIndex (void)

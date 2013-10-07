@@ -707,7 +707,7 @@ SubscriberStationNetDevice::Enqueue (Ptr<Packet> packet,
         }
     }
   NS_LOG_INFO ("ServiceFlowManager: enqueuing packet" );
-  return connection->Enqueue (packet, hdrType, hdr);
+  return connection->Enqueue (packet, hdrType, hdr);//WimaxConnection::Enqueue
 }
 
 void
