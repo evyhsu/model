@@ -70,7 +70,8 @@ SSLinkManager::SSLinkManager (Ptr<SubscriberStationNetDevice> ss)
 	m_tmpB (0),
     m_rssi (0),
     m_nbPref (0),  
-    m_entry (0)
+    m_entry (0),
+    m_handoversize (0)
 {
    m_detected = false;
 }
@@ -567,8 +568,7 @@ SSLinkManager::GetMOB_MSHO_REQ_size ()
 void 
 SSLinkManager::send_msho_req ()
 {
-    
-    //Ptr<SubscriberStationNetDevice> ss = m_device->GetObject<SubscriberStationNetDevice> ();
+    //Cid cid;
     MshoReq mshoreq;//define at mac-messages.cc, replace Mac80216MobMshoReqFrame *m_req_frame;
 
   	for (uint8_t i = 0 ; i < GetNbNeighbor() ; i++) {
@@ -592,10 +592,8 @@ SSLinkManager::send_msho_req ()
 
    //p->sizeof(MshoReq) + m_nbPref*sizeof(MshoReqBsIndex); //replace ns2 p = getPacket ();
    m_rssi = CalculateMaxIRSignalStrength ();
-   p->Getsize() = 
-
+   m_handoversize = (p->GetSize () + GetMOB_MSHO_REQ_size ());
+   m_ss->GetBasicCid ();
 }
-
-
 
 } // namespace ns3
