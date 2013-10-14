@@ -543,6 +543,7 @@ uint8_t
 SSLinkManager::GetMOB_MSHO_REQ_size ()
 {	
     MshoReq mshoreq;
+    MshoReqBsIndex mshoreqbsindex;
     std::cout << "yensshandover" << std::endl;
 	
 	if (mshoreq.GetNNewBsIndex () !=0) 
@@ -552,12 +553,11 @@ SSLinkManager::GetMOB_MSHO_REQ_size ()
   	if (mshoreq.GetReportMetric () & 0x2) m_tmp++;
   	if (mshoreq.GetReportMetric () & 0x4) m_tmp++;
 
-	/*for (uint8_t i = 0 ; i < m_n_new_bs_index ; i++) {
+	for (uint8_t i = 0 ; i < mshoreq.GetNNewBsIndex () ; i++) {
 	    m_tmpB += 20 + 8*m_tmp;    
-      if (bs_index[i].arrival_time_diff_ind & 0x1)//000000000000000000000000000000000
+      if (mshoreqbsindex.GetArrivalTimeDiffInd () & 0x1)
       	m_tmpB += 4;
-  }*/
-
+  }
   	m_size += m_tmp/8;
   	if ((m_tmp%8)!=0)
     	m_size ++;  //includes padding

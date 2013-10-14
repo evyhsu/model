@@ -619,8 +619,8 @@ SubscriberStationNetDevice::DoSend (Ptr<Packet> packet,
   ServiceFlow *serviceFlow = 0;
 //yen
   //Cid *cid;
-  m_linkManager->GetMOB_MSHO_REQ_size ();
-  //m_linkManager->send_msho_req();
+  //m_linkManager->GetMOB_MSHO_REQ_size ();
+  m_linkManager->send_msho_req();
 
   if (IsRegistered ())
     {
