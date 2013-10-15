@@ -855,6 +855,93 @@ DsaAck::Deserialize (Buffer::Iterator start)
 
   return i.GetDistanceFrom (start);
 }
+
+// ----------------------------------------------------------------------------------------------------------
+//yen
+//rewrite ns2 mac802_16pkt.h "struct mac802_16_mob_nbr_adv_frame"
+NS_OBJECT_ENSURE_REGISTERED (NbrAdv);
+
+NbrAdv::NbrAdv (void)
+  : m_nNeighbors (0),
+    m_skipOptField (0)
+{
+}
+
+NbrAdv::~NbrAdv (void)
+{
+}
+
+void 
+NbrAdv::SetNNeighbors (uint8_t nNeighbors) 
+{
+  m_nNeighbors = nNeighbors;
+} 
+
+uint8_t 
+NbrAdv::GetNNeighbors (void) const
+{
+  return m_nNeighbors;
+}
+
+void 
+NbrAdv::SetSkipOptField (uint8_t skipOptField)
+{
+  m_skipOptField = skipOptField;
+}
+
+uint8_t 
+NbrAdv::GetSkipOptField (void) const
+{
+  return m_skipOptField;
+}
+std::string 
+NbrAdv::GetName (void) const
+{
+  return "Nbr_Adv";
+}
+
+TypeId
+NbrAdv::GetTypeId (void)
+{
+  static TypeId tid = TypeId ("ns3::NbrAdv").SetParent<Header> ().AddConstructor<NbrAdv> ();
+  return tid;
+}
+
+TypeId
+NbrAdv::GetInstanceTypeId (void) const
+{
+  return GetTypeId ();
+}
+
+void
+NbrAdv::Print (std::ostream &os) const
+{
+  os << " n Neighbors = " << (u_char) m_nNeighbors << ", skip Opt Field = " << (u_char) m_skipOptField;
+}
+
+uint32_t
+NbrAdv::GetSerializedSize (void) const
+{
+  return 2 + 1;//*********NOT sure retrun number***********//
+}
+
+void
+NbrAdv::Serialize (Buffer::Iterator start) const
+{
+  Buffer::Iterator i = start;
+  i.WriteU8 (m_nNeighbors);
+  i.WriteU8 (m_skipOptField);
+}
+
+uint32_t
+NbrAdv::Deserialize (Buffer::Iterator start)
+{
+  Buffer::Iterator i = start;
+  m_nNeighbors = i.ReadU8 ();
+  m_skipOptField = i.ReadU8 ();
+
+  return i.GetDistanceFrom (start);
+}
 // ----------------------------------------------------------------------------------------------------------
 //yen
 //rewrite ns2 mac802_16pkt.h "struct mac802_16_mob_msho_req_frame"

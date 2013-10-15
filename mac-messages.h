@@ -58,7 +58,7 @@ public:
     MESSAGE_TYPE_DSA_RSP = 12,
     MESSAGE_TYPE_DSA_ACK = 13,
 //yen
-    //MESSAGE_TYPE_MOB_NBR_ADV = 53 ,
+    MESSAGE_TYPE_MOB_NBR_ADV = 53 ,
     //MESSAGE_TYPE_MOB_SCN_REQ = 54 ,
     //MESSAGE_TYPE_MOB_SCN_RSP = 55 ,
     //MESSAGE_TYPE_MOB_SCN_REP = 60,
@@ -503,6 +503,42 @@ private:
 } // namespace ns3
 
 #endif /* RNG_REQ_H */
+// ----------------------------------------------------------------------------------------------------------
+//yen
+#ifndef NBR_ADV_H
+#define NBR_ADV_H
+
+#include <stdint.h>
+namespace ns3 {
+
+class NbrAdv : public Header
+{
+
+public:
+  NbrAdv (void);
+  virtual ~NbrAdv (void);
+  void SetNNeighbors (uint8_t nNeighbors);  
+  void SetSkipOptField (uint8_t skipOptField);
+  uint8_t GetNNeighbors (void) const;
+  uint8_t GetSkipOptField (void) const;
+
+  std::string GetName (void) const;
+  static TypeId GetTypeId (void);
+  virtual TypeId GetInstanceTypeId (void) const;
+  void Print (std::ostream &os) const;
+  uint32_t GetSerializedSize (void) const;
+  void Serialize (Buffer::Iterator start) const;
+  uint32_t Deserialize (Buffer::Iterator start);
+
+private:
+  u_char m_nNeighbors;
+  u_char m_skipOptField;
+
+};//class
+
+}//namespace ns3
+
+#endif /* NBR_ADV_H */
 // ----------------------------------------------------------------------------------------------------------
 //yen
 #ifndef MSHO_REQ_H
