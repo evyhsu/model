@@ -57,7 +57,7 @@ public:
     SS_STATE_WAITING_REG_RANG_INTRVL, // regular ranging interval
     SS_STATE_WAITING_INV_RANG_INTRVL, // invited ranging interval
     SS_STATE_WAITING_RNG_RSP, SS_STATE_ADJUSTING_PARAMETERS, SS_STATE_REGISTERED, SS_STATE_TRANSMITTING, // currently not being used anywhere
-    SS_STATE_STOPPED
+    SS_STATE_STOPPED, SS_STATE_WAITING_MOB_BSHO_RSP
   };
 
   enum EventType

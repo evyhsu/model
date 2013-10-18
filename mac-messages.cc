@@ -863,7 +863,13 @@ NS_OBJECT_ENSURE_REGISTERED (NbrAdv);
 
 NbrAdv::NbrAdv (void)
   : m_nNeighbors (0),
-    m_skipOptField (0)
+    m_skipOptField (0),
+    m_fAIndex (0),
+    m_bsEirp (0),
+    m_nbrBsid (Mac48Address ("00:00:00:00:00:32")), 
+    m_dcdIncluded (true),
+    m_ucdIncluded (true),
+    m_phyIncluded (true)
 {
 }
 
@@ -894,6 +900,81 @@ NbrAdv::GetSkipOptField (void) const
 {
   return m_skipOptField;
 }
+
+void 
+NbrAdv::SetFAIndex (uint8_t fAIndex) 
+{
+  m_fAIndex = fAIndex;
+} 
+
+uint8_t 
+NbrAdv::GetFAIndex (void) const
+{
+  return m_fAIndex;
+}
+
+void 
+NbrAdv::SetBsEirp (uint8_t bsEirp) 
+{
+  m_bsEirp = bsEirp;
+} 
+
+uint8_t 
+NbrAdv::GetBsEirp (void) const
+{
+  return m_bsEirp;
+}
+
+void 
+NbrAdv::SetNbrBsid (Mac48Address nbrBsid) 
+{
+  m_nbrBsid = nbrBsid;
+} 
+
+
+Mac48Address 
+NbrAdv::GetNbrBsid (void) const
+{
+  return m_nbrBsid;
+}
+
+void 
+NbrAdv::SetDcdIncluded (uint8_t dcdIncluded) 
+{
+  m_dcdIncluded = dcdIncluded;
+} 
+
+uint8_t 
+NbrAdv::GetDcdIncluded (void) const
+{
+  return m_dcdIncluded;
+}
+
+void 
+NbrAdv::SetUcdIncluded (uint8_t ucdIncluded) 
+{
+  m_ucdIncluded = ucdIncluded;
+} 
+
+uint8_t 
+NbrAdv::GetUcdIncluded (void) const
+{
+  return m_ucdIncluded;
+}
+
+void 
+NbrAdv::SetPhyIncluded (uint8_t phyIncluded) 
+{
+  m_phyIncluded = phyIncluded;
+} 
+
+uint8_t 
+NbrAdv::GetPhyIncluded (void) const
+{
+  return m_phyIncluded;
+}
+
+
 std::string 
 NbrAdv::GetName (void) const
 {

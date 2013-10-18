@@ -160,7 +160,7 @@ WimaxNetDevice::DoDispose (void)
   m_connectionManager = 0;
   m_bandwidthManager = 0;
 //yen
-std::cout << "HELLO123123" << std::endl;
+//std::cout << "HELLO123123" << std::endl;
   NetDevice::DoDispose ();
 }
 

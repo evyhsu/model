@@ -237,6 +237,8 @@ SSLinkManager::SendRangingRequest (uint8_t uiuc, uint16_t allocationSize)
     }
 
   m_ss->Enqueue (packet, MacHeaderType (), connection);
+//yen
+   NS_LOG_INFO ("yen send ranging req CID GetConnection :" << connection);
 
   m_ss->SetState (SubscriberStationNetDevice::SS_STATE_WAITING_RNG_RSP);
   m_ss->SetTimer (Simulator::Schedule (m_ss->GetIntervalT3 (),
@@ -514,7 +516,7 @@ SSLinkManager::ScheduleScanningRestart (Time interval,
 uint8_t
 SSLinkManager::GetNbNeighbor (void) const
 {
-	uint8_t m_nbentry = 0;
+	uint8_t m_nbentry = 1;
     return m_nbentry;
 }
 
@@ -565,12 +567,13 @@ SSLinkManager::GetMOB_MSHO_REQ_size ()
   	return m_size;
 }
 
-void 
+/*void 
 SSLinkManager::send_msho_req ()
 {
+
     //Cid cid;
     MshoReq mshoreq;//define at mac-messages.cc, replace Mac80216MobMshoReqFrame *m_req_frame;
-
+    SetParametersToAdjust (&mshoreq);
   	for (uint8_t i = 0 ; i < GetNbNeighbor() ; i++) {
    	  m_entry = GetNeighbors(i);
 		if (isDetected()){
@@ -583,17 +586,21 @@ SSLinkManager::send_msho_req ()
 			//return ; //no other BS found*/
 
 //create packet for request
-   Ptr<Packet> p = Create<Packet> ();
+   /*Ptr<Packet> p = Create<Packet> ();
    p->AddHeader (mshoreq);
    p->AddHeader (ManagementMessageType (
                        ManagementMessageType::MESSAGE_TYPE_MOB_MSHO_REQ));
    Ptr<WimaxConnection> connection;
    m_ss->Enqueue (p, MacHeaderType (), connection);
-
+   NS_LOG_INFO ("111111111111111111111111111111111111111111111111111111111111" );
+   //NS_LOG_INFO ("send_msho_req CID GetConnection :" << connection);
+   m_ss->SetState (SubscriberStationNetDevice::SS_STATE_WAITING_MOB_BSHO_RSP);
    //p->sizeof(MshoReq) + m_nbPref*sizeof(MshoReqBsIndex); //replace ns2 p = getPacket ();
    m_rssi = CalculateMaxIRSignalStrength ();
    m_handoversize = (p->GetSize () + GetMOB_MSHO_REQ_size ());
    m_ss->GetBasicCid ();
-}
+
+
+}*/
 
 } // namespace ns3

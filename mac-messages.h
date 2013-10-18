@@ -519,8 +519,21 @@ public:
   virtual ~NbrAdv (void);
   void SetNNeighbors (uint8_t nNeighbors);  
   void SetSkipOptField (uint8_t skipOptField);
+  void SetFAIndex (uint8_t fAIndex);
+  void SetBsEirp (uint8_t bsEirp);
+  void SetNbrBsid (Mac48Address nbrBsid);
+  void SetDcdIncluded (uint8_t dcdIncluded);
+  void SetUcdIncluded (uint8_t ucdIncluded);
+  void SetPhyIncluded (uint8_t phyIncluded);
+
   uint8_t GetNNeighbors (void) const;
   uint8_t GetSkipOptField (void) const;
+  uint8_t GetFAIndex (void) const;
+  uint8_t GetBsEirp (void) const;
+  Mac48Address GetNbrBsid (void) const;
+  uint8_t GetDcdIncluded (void) const;
+  uint8_t GetUcdIncluded (void) const;
+  uint8_t GetPhyIncluded (void) const;
 
   std::string GetName (void) const;
   static TypeId GetTypeId (void);
@@ -533,7 +546,12 @@ public:
 private:
   u_char m_nNeighbors;
   u_char m_skipOptField;
-
+  u_char m_fAIndex;
+  u_char m_bsEirp;
+  Mac48Address m_nbrBsid;
+  bool m_dcdIncluded;
+  bool m_ucdIncluded;
+  bool m_phyIncluded;
 };//class
 
 }//namespace ns3

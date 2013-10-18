@@ -86,6 +86,10 @@ private:
   uint32_t m_signalQuality;
   uint8_t m_signalQualityThreshold;
   int tries; // variable to test multiple RNG-REQ by the SS for example undecodable at BS or lost RNG-RSP
+
+//yen
+  Ptr<WimaxConnection> m_wimaxconnection;
+  void SendNbrAdv (Cid cid, NbrAdv *nbradv);
 };
 
 } // namespace ns3

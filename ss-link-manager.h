@@ -130,6 +130,7 @@ private:
   uint8_t m_entry;
   bool m_detected;
   uint16_t m_handoversize;
+
 };
 
 } // namespace ns3

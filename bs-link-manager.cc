@@ -317,6 +317,8 @@ BSLinkManager::ScheduleRngRspMessage (Cid cid, RngRsp *rngrsp)
   p->AddHeader (ManagementMessageType (ManagementMessageType::MESSAGE_TYPE_RNG_RSP));
 
   m_bs->Enqueue (p, MacHeaderType (), m_bs->GetConnection (cid));
+//yen
+  NS_LOG_INFO ("00000000000000000CID GetConnection :" << m_bs->GetConnection (cid));
 }
 
 void
@@ -363,6 +365,29 @@ bool
 BSLinkManager::IsRangingAcceptable (void)
 {
   return GetSignalQuality () > m_signalQualityThreshold;
+}
+
+void 
+BSLinkManager::SendNbrAdv (Cid cid, NbrAdv *nbradv)
+{
+  DlMap dlmap;
+  nbradv->SetNNeighbors (1); 
+  nbradv->SetSkipOptField (0);
+  for (uint8_t i = 0 ; i < nbradv->GetNNeighbors () ; i++) {
+       nbradv->SetFAIndex (0); 
+       nbradv->SetBsEirp (0);
+       nbradv->SetNbrBsid (nbradv->GetNbrBsid ());
+       nbradv->GetDcdIncluded ();
+       nbradv->GetUcdIncluded ();
+       nbradv->GetPhyIncluded ();
+    }
+  Ptr<Packet> p = Create<Packet> ();
+  p->AddHeader (*nbradv);
+  p->AddHeader (ManagementMessageType (ManagementMessageType::MESSAGE_TYPE_MOB_NBR_ADV));
+
+  m_bs->Enqueue (p, MacHeaderType (), m_bs->GetConnection (cid));
+
+
 }
 
 } // namespace ns3

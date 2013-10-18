@@ -615,12 +615,12 @@ SubscriberStationNetDevice::DoSend (Ptr<Packet> packet,
   NS_LOG_INFO ("\t\tDestination: " << dest );
   NS_LOG_INFO ("\t\tPacket Size:  " << packet->GetSize () );
   NS_LOG_INFO ("\t\tProtocol:    " << protocolNumber );
-
+  NS_LOG_INFO ("help me~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
   ServiceFlow *serviceFlow = 0;
 //yen
   //Cid *cid;
   //m_linkManager->GetMOB_MSHO_REQ_size ();
-  m_linkManager->send_msho_req();
+
 
   if (IsRegistered ())
     {
@@ -767,13 +767,15 @@ SubscriberStationNetDevice::DoReceive (Ptr<Packet> packet)
   ManagementMessageType msgType;
   RngRsp rngrsp;
   Cid cid;
+//yen
+  MshoReq mshoreq;
   uint32_t pktSize = packet->GetSize ();
   packet->RemoveHeader (gnrcMacHdr);
   FragmentationSubheader fragSubhdr;
   bool fragmentation = false;  // it becames true when there is a fragmentation subheader
 //yen
   //ServiceFlow *serviceFlow = 0;
-
+  //m_linkManager->send_msho_req();  
   if (gnrcMacHdr.GetHt () == MacHeaderType::HEADER_TYPE_GENERIC)
     {
       if (gnrcMacHdr.check_hcs () == false)
@@ -971,14 +973,20 @@ SubscriberStationNetDevice::DoReceive (Ptr<Packet> packet)
                              "SS: Error while receiving a ranging response message: SS state should be SS_STATE_WAITING_RNG_RSP");
               packet->RemoveHeader (rngrsp);
               m_linkManager->PerformRanging (cid, rngrsp);
+//yen 
+              NS_LOG_INFO ("yen MESSAGE_TYPE_RNG_RSP :" << cid);
               break;
 //yen
-            case ManagementMessageType::MESSAGE_TYPE_MOB_MSHO_REQ:                             
+            /*case ManagementMessageType::MESSAGE_TYPE_MOB_MSHO_REQ:                             
                 break;
-            case ManagementMessageType::MESSAGE_TYPE_MOB_BSHO_RSP:              
+            case ManagementMessageType::MESSAGE_TYPE_MOB_BSHO_RSP:
+              NS_ASSERT_MSG (SS_STATE_WAITING_MOB_BSHO_RSP,
+                             "SS: Error while receiving a handover response message: SS state should be SS_STATE_WAITING_MOB_BSHO_RSP");
+              packet->RemoveHeader (mshoreq);
+              m_linkManager->send_msho_req();              
                 break;
             case ManagementMessageType::MESSAGE_TYPE_MOB_HO_IND:                                                     
-                break;
+                break;*/
 
             default:
               NS_LOG_ERROR ("Invalid management message type");
@@ -1080,6 +1088,7 @@ SubscriberStationNetDevice::DoReceive (Ptr<Packet> packet)
           NS_LOG_INFO ("yen_SS : " << GetMacAddress() << " Receive CID : " << cid/* << " sfid : " << serviceFlow->GetSfid()*/); 
           m_traceSSRx (packet, GetMacAddress (), &cid);
           ForwardUp (packet, m_baseStationId, GetMacAddress ()); // source shall be BS's address or sender SS's?
+          //m_linkManager->send_msho_req();
         }
       else if (IsPromisc ())
         {
@@ -1097,6 +1106,7 @@ SubscriberStationNetDevice::DoReceive (Ptr<Packet> packet)
     {
       // from other SS, ignore
     }
+  //m_linkManager->send_msho_req();  
 }
 
 void

@@ -68,7 +68,7 @@ WimaxConnection::WimaxConnection (Cid cid, enum Cid::Type type)
     m_queue (CreateObject<WimaxMacQueue> (1024)),
     m_serviceFlow (0),
 //yen
-    m_nbentry (0),
+    m_nbentry (1),
     m_nbs (1)
     
 {
